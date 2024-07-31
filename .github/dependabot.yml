@@ -16,13 +16,3 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - test-guided-notebooks
-  # Workaround to exclude upgrading dependencies in the custom-nb-image directory.
-  # Issue: https://github.com/dependabot/dependabot-core/issues/4364
-  - package-ecosystem: "pip"
-    directory: /custom-nb-image
-    target-branch: main
-    schedule:
-      interval: "weekly"
-    labels: [ ]
-    ignore:
-      - dependency-name: "*" # Ignore all dependencies

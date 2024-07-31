@@ -178,7 +178,7 @@ stack-data==0.5.1
 starlette==0.20.4
 tabulate==0.8.10
 tensorboardx==2.5.1
-terminado==0.15.0; python_version >= '3.7'
+terminado==0.18.1; python_version >= '3.7'
 threadpoolctl==3.1.0; python_version >= '3.6'
 tinycss2==1.1.1; python_version >= '3.6'
 tomli==2.0.1; python_full_version < '3.11.0a7'

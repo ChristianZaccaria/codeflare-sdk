@@ -70,7 +70,7 @@ hyperopt==0.2.5
 idna==3.4; python_version >= '3.5'
 importlib-metadata==4.12.0; python_version < '3.10'
 importlib-resources==5.9.0; python_version < '3.9'
-ipykernel==6.16.0; python_version >= '3.7'
+ipykernel==6.29.5; python_version >= '3.7'
 ipython-genutils==0.2.0
 ipython==8.5.0; python_version >= '3.8'
 ipywidgets==8.0.2

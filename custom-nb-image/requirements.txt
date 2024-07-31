@@ -200,6 +200,6 @@ wheel==0.37.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2,
 widgetsnbextension==4.0.3; python_version >= '3.7'
 wrapt==1.14.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 xgboost-ray==0.1.10
-xgboost==1.6.2
+xgboost==2.1.1
 yarl==1.8.1; python_version >= '3.7'
 zipp==3.8.1; python_version < '3.10'

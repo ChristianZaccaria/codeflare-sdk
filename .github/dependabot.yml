@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directories:
+      - "/frontend"
+      - "**/demo-notebooks/guided-demos*"
+      - "/tests/e2e"
+    schedule:
+      interval: "weekly"

@@ -106,7 +106,7 @@ memory-profiler==0.60.0
 mistune==2.0.4
 msgpack==1.0.4
 multidict==6.0.2; python_version >= '3.7'
-mypy-extensions==0.4.3
+mypy-extensions==1.0.0
 nbclassic==0.4.3; python_version >= '3.7'
 nbclient==0.6.8; python_version >= '3.7'
 nbconvert==7.0.0; python_version >= '3.7'

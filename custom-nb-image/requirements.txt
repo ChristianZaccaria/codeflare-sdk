@@ -40,7 +40,7 @@ contourpy==1.0.5; python_version >= '3.7'
 cryptography==38.0.1; python_version >= '3.6'
 cycler==0.11.0; python_version >= '3.6'
 cython==0.29.32
-dask[array,dataframe]==2021.2.0
+dask[array,dataframe]==2024.7.1
 dataclasses==0.6
 debugpy==1.6.3; python_version >= '3.7'
 decorator==5.1.1; python_version >= '3.5'

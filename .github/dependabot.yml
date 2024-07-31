@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # pip means poetry in this case, this keeps poetry.lock up to date with constraints in pyproject.toml.
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: "weekly"
+    # The group configuration option is used to group updates for consistency across related directories.
+    # Example: https://github.com/project-codeflare/codeflare-sdk/pull/576/commits/da54cc70bec0b2206ad2a36f80c3b8e02dd71fb9 
+    groups:
+      requirements.txt:
+        patterns:
+          - pytorch_lightning
+          - torchmetrics
+          - torchvision
+    open-pull-requests-limit: 10
+    labels:
+      - test-guided-notebooks
+  # Workaround to exclude upgrading dependencies in the custom-nb-image directory.
+  # Issue: https://github.com/dependabot/dependabot-core/issues/4364
+  - package-ecosystem: pip
+    directories: 
+      - "**/custom-nb-image*"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*" # Ignore all dependencies

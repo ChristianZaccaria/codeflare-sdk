@@ -5,24 +5,23 @@
 
 version: 2
 updates:
-  # pip means poetry in this case, this keeps poetry.lock up to date with constraints in pyproject.toml.
+  # This is to update requirements.txt files in the guided-demos, and e2e directories.
+  # The group configuration option is used to group updates for consistency across related directories.
   - package-ecosystem: "pip"
     directories:
-      - "/"
       - "**/demo-notebooks/guided-demos*"
       - "/tests/e2e"
     schedule:
       interval: "weekly"
+    groups:
+      requirements.txt:
+        patterns:
+          - "*"
     open-pull-requests-limit: 10
     labels:
-      - test-guided-notebooks
-  # Workaround to exclude upgrading dependencies in the custom-nb-image directory.
+      - "test-guided-notebooks"
+
+  # We can not bump dependencies for poetry.lock and pyproject.toml files without 
+  # also creating multiple PRs for custom-nb-image/requirements.txt file.
+  # Dependabot does not yet offer the feature neither a workaround to exclude directories.
   # Issue: https://github.com/dependabot/dependabot-core/issues/4364
-  - package-ecosystem: "pip"
-    directory: /custom-nb-image
-    target-branch: main
-    schedule:
-      interval: "weekly"
-    labels: [ ]
-    ignore:
-      - dependency-name: "*" # Ignore all dependencies

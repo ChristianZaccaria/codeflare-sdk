@@ -67,10 +67,26 @@ class Cluster:
         based off of the configured resources to represent the desired cluster
         request.
         """
+        self.cluster_up_down_buttons()
         self.config = config
         self.app_wrapper_yaml = self.create_app_wrapper()
         self._job_submission_client = None
         self.app_wrapper_name = self.config.name
+
+    import ipywidgets as widgets
+    from IPython.display import display, clear_output
+    def cluster_up_down_buttons(self):
+        delete_button = widgets.Button(
+            description='Cluster Down',
+            icon='trash',
+        )
+        up_button = widgets.Button(
+            description='Cluster Up',
+            icon='play',
+        )
+        # Display the buttons in an HBox
+        display(widgets.HBox([delete_button, up_button]))
+
 
     @property
     def _client_headers(self):
@@ -581,6 +597,117 @@ def get_current_namespace():  # pragma: no cover
                 return active_context["context"]["namespace"]
             except KeyError:
                 return None
+
+import ipywidgets as widgets
+from IPython.display import display, clear_output
+
+
+def format_status(status):
+    if status == "Ready":
+        return '<span style="color: green;">Ready ✓</span>'
+    elif status == "Suspended":
+        return '<span style="color: orange;">Suspended ~</span>'
+    elif status == "Starting":
+        return '<span style="color: purple;">Starting ⌛</span>'
+    elif status == "Failed":
+        return '<span style="color: red;">Failed ✗</span>'
+    else:
+        return status
+
+def list_cluster_details():
+    import ipywidgets as widgets
+    import pandas as pd
+    from IPython.display import display, HTML
+    data = {
+        "name": ["RayTest1", "RayTest2", "RayTest3", "RayTest4"],
+        "namespace": ["default", "usernamespace", "usernamespace", "usernamespace"],
+        "head_gpu": [0, 1, 2, 0],
+        "worker_gpu": [2, 0, 1, 0],
+        "min_memory": [2, 4, 4, 2],
+        "max_memory": [2, 4, 8, 4],
+        "min_cpu": [1, 2, 4, 2],
+        "max_cpu": [1, 4, 8, 2],
+        "status": ["Ready", "Starting", "Suspended", "Failed"]
+    }
+    df = pd.DataFrame(data)
+
+    # format to add icons
+    df['status'] = df['status'].apply(format_status)
+
+    my_output = widgets.Output()
+    my_output
+    classification_widget = widgets.ToggleButtons(
+        options=['RayTest1', "RayTest2", "RayTest3", "RayTest4"],
+        description='Select an existing cluster:',
+    )
+
+    def on_click(change):
+        new_value = change["new"]
+        my_output.clear_output()
+        with my_output:
+            display(HTML(df[df["name"]==new_value][["name", "namespace", "head_gpu", "worker_gpu", "min_memory", "max_memory", "min_cpu", "max_cpu", "status"]].to_html(escape=False, index=False, border=2)))
+
+    classification_widget.observe(on_click, names="value")
+    display(widgets.VBox([classification_widget, my_output]))
+
+
+    list_jobs_button = widgets.Button(
+                description='View Jobs',
+                icon='suitcase'
+            )
+    delete_button = widgets.Button(
+                description='Delete Cluster',
+                icon='trash'
+            )
+    ray_dashboard_button = widgets.Button(
+                description='Open Ray Dashboard',
+                icon='dashboard',
+                layout=widgets.Layout(width='auto'),
+            )
+    view_yaml_button = widgets.Button(
+                description='View YAML',
+                icon='file'
+            )
+    display(widgets.HBox([delete_button, list_jobs_button, view_yaml_button, ray_dashboard_button]))
+
+
+def display_cluster_radios():
+    create_cluster_widgets()
+    cluster_radios, delete_buttons = create_cluster_widgets()
+    radio_buttons = widgets.RadioButtons(
+        options=cluster_radios,
+        description='Clusters:',
+        disabled=False
+    )
+    display(radio_buttons)
+    for button in delete_buttons:
+        display(button)
+
+def create_cluster_widgets():
+    clusters = {"name": "ray1", "namespace": "default"}, {"name": "ray2", "namespace": "default"}
+    cluster_radios = []
+    delete_buttons = []
+
+    # Function to handle delete button click
+    def on_delete_clicked(b):
+        index = int(b.tooltip)
+        del clusters[index]
+        clear_output()
+        display_cluster_radios()
+
+    for index, cluster in enumerate(clusters):
+        delete_button = widgets.Button(
+            description='Delete',
+            tooltip=str(index),
+            icon='trash'
+        )
+        delete_button.on_click(on_delete_clicked)
+        cluster_radios.append(
+            (f'{cluster["name"]} ({cluster["namespace"]})', cluster["name"])
+        )
+        delete_buttons.append(delete_button)
+
+    return cluster_radios, delete_buttons
 
 
 def get_cluster(

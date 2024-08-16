@@ -18,6 +18,8 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - "test-guided-notebooks"
+    # Disable automatic rebasing to prevent overloading CI runs.
+    rebase-strategy: "disabled"
 
   # pip means poetry in this case, this keeps poetry.lock up to date with constraints in pyproject.toml.
   - package-ecosystem: "pip"
@@ -27,3 +29,5 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - "test-guided-notebooks"
+    # Disable automatic rebasing to prevent overloading CI runs.
+    rebase-strategy: "disabled"

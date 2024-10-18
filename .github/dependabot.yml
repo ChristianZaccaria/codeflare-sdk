@@ -3,7 +3,7 @@
 
 version: 2
 updates:
-  # This is to update requirements.txt files in the guided-demos, and e2e directories.
+  # This is to update requirements.txt files in the guided-demos, and e2e directories. dummychange
   - package-ecosystem: "pip"
     directories:
       - "**/demo-notebooks/guided-demos*"

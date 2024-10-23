@@ -8,7 +8,7 @@ on:
 
 jobs:
     add-approve-lgtm-label:
-        if: ${{ github.actor == 'dependabot[bot]' && contains(github.event.pull_request.labels.*.name, 'dependabot') }}
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'dependabot') }}
         runs-on: ubuntu-latest
 
         # Permission required to edit a PR
@@ -21,4 +21,4 @@ jobs:
               run: |
                   gh pr edit ${{ github.event.pull_request.number }} --add-label "lgtm" --add-label "approved"
               env:
-                GITHUB_TOKEN: ${{ secrets.CODEFLARE_MACHINE_ACCOUNT_TOKEN }}
+                GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}

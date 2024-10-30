@@ -1,0 +1,35 @@
+name: Synk Security
+on:
+  push:
+    branches:
+      - main
+
+# permissions:
+#   security-events: write
+#   contents: read
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Snyk Monitor and Test multiple projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_ORG: ${{ secrets.SNYK_ORG }}
+        run: |
+          git checkout main
+          echo "Authenticating with Snyk"
+          snyk auth ${SNYK_TOKEN}
+          echo "Scanning project: codeflare-sdk/main"
+          snyk monitor --all-projects --org=${SNYK_ORG} --target-reference="$(git describe --tags)"
+          list_of_released_tags=("v0.22.0" "v0.19.1")
+          for project in "${list_of_released_tags[@]}"; do
+            echo "Scanning project: codeflare-sdk/$project"
+            git checkout $project
+            snyk monitor --all-projects --org=${SNYK_ORG} --target-reference="$(git describe --tags)"

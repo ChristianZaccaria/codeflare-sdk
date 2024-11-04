@@ -33,7 +33,7 @@ jobs:
           # This list is based off RHOAI Supported versions: https://access.redhat.com/support/policy/updates/rhoai-sm/lifecycle
           # Compared to the tags in the ImageStream annotations: https://github.com/red-hat-data-services/notebooks/blob/rhoai-2.8/manifests/base/jupyter-datascience-notebook-imagestream.yaml
           # Loop through the list of released tags and scan each project
-          list_of_released_tags=("v0.22.0" "v0.21.1" "v0.19.1", "v0.16.4", "vv0.14.1")
+          list_of_released_tags=("v0.38.0", "v0.22.0" "v0.21.1" "v0.19.1", "v0.16.4", "vv0.14.1")
           for project in "${list_of_released_tags[@]}"; do
             echo "Scanning project: codeflare-sdk/$project"
             git checkout $project

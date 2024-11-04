@@ -8,13 +8,12 @@ on:
               required: true
               description: 'Version number (for example: 0.1.0)'
     push:
-        branches:
-            - test-odh-notebooks-sync
+        branches: [ main ]
 
 env:
   BRANCH_NAME: main
   PR_BRANCH_NAME: snyk-tag-monitoring-${{ github.run_id }}
-  GITHUB_TOKEN: ${{ secrets.GH_CLI_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
   RELEASE_VERSION: ${{ github.event.inputs.release-version || '0.2.0' }}
 
 jobs:
@@ -32,8 +31,8 @@ jobs:
 
           - name: Commit and push changes
             run: |
-              git config --global user.email "138894154+codeflare-machine-account@users.noreply.github.com"
-              git config --global user.name "codeflare-machine-account"
+              git config --global user.email "christian.zaccaria.cz@gmail.com"
+              git config --global user.name "ChristianZaccaria"
               git checkout -b $PR_BRANCH_NAME
               git commit -am "Update snyk-security.yaml"
               git push origin $PR_BRANCH_NAME
